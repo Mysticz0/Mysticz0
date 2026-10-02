@@ -3,13 +3,13 @@
 Currently studying Software Engineering and exploring AI and machine learning.
 
 <!--LANGS:START-->
-```diff
-  Languages
+```
+  Language Usage
 
 + Java         █████████████████████▌                     54.2%
-- Python       █████████████████▌                         43.5%
-! Go Template  █                                           2.2%
-# Dockerfile                                               0.1%
++ Python       █████████████████▌                         43.5%
++ Go Template  █                                           2.2%
++ Dockerfile                                               0.1%
 ```
 <!--LANGS:END-->
 
