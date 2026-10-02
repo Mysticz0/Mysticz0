@@ -1,22 +1,17 @@
-"""Regenerate languages.svg from public repo language stats."""
+"""Regenerate the color-coded language chart in README.md from public repo language stats."""
 
 import json
 import os
+import re
 import urllib.request
-from html import escape
 
 USER = os.environ.get("GH_USER", "Mysticz0")
 TOKEN = os.environ.get("GITHUB_TOKEN")
-OUTPUT = "languages.svg"
+README = "README.md"
 COLORS_URL = "https://raw.githubusercontent.com/ozh/github-colors/master/colors.json"
 FALLBACK_COLOR = "#8b949e"
-
-FONT_SIZE = 14
-CHAR_WIDTH = 8.4  # approx advance of a 14px monospace glyph
-ROW_HEIGHT = 24
-BAR_WIDTH = 320
-BAR_HEIGHT = 12
-PAD = 16
+BAR_EM = 15  # width of a 100% bar
+START, END = "<!--LANGS:START-->", "<!--LANGS:END-->"
 
 
 def fetch(url, auth=False):
@@ -53,49 +48,35 @@ def language_colors():
         return {}
 
 
+def tex_escape(text):
+    return re.sub(r"([#$%&_{}])", r"\\\1", text)
+
+
 def render(totals, colors):
     total = sum(totals.values())
-    name_width = max(len(lang) for lang in totals) * CHAR_WIDTH
-    bar_x = PAD + name_width + 2 * CHAR_WIDTH
-    pct_x = bar_x + BAR_WIDTH + 7 * CHAR_WIDTH
-    width = pct_x + PAD
-    first_row = PAD + ROW_HEIGHT * 2
-    height = first_row + ROW_HEIGHT * (len(totals) - 1) + PAD
-
-    rows = []
-    for i, (lang, size) in enumerate(totals.items()):
+    rows = [r"\texttt{Languages} & & \\"]
+    for lang, size in totals.items():
         share = size / total
-        y = first_row + i * ROW_HEIGHT
-        bar_y = y - BAR_HEIGHT + 2
-        fill = colors.get(lang) or FALLBACK_COLOR
+        color = colors.get(lang) or FALLBACK_COLOR
+        bar = max(share * BAR_EM, 0.1)
         rows.append(
-            f'<text x="{PAD}" y="{y}">{escape(lang)}</text>'
-            f'<rect class="track" x="{bar_x:.1f}" y="{bar_y}" width="{BAR_WIDTH}" height="{BAR_HEIGHT}"/>'
-            f'<rect x="{bar_x:.1f}" y="{bar_y}" width="{max(share * BAR_WIDTH, 2):.1f}" height="{BAR_HEIGHT}" fill="{fill}"/>'
-            f'<text x="{pct_x:.1f}" y="{y}" text-anchor="end">{share * 100:.1f}%</text>'
+            rf"\texttt{{{tex_escape(lang)}}} & "
+            rf"\color{{{color}}}{{\rule{{{bar:.2f}em}}{{0.6em}}}} & "
+            rf"\texttt{{{share * 100:.1f}\%}} \\"
         )
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" height="{height}" viewBox="0 0 {width:.0f} {height}">
-<style>
-text {{ font: {FONT_SIZE}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #1f2328; }}
-.track {{ fill: #1f2328; fill-opacity: 0.08; }}
-@media (prefers-color-scheme: dark) {{
-  text {{ fill: #e6edf3; }}
-  .track {{ fill: #e6edf3; }}
-}}
-</style>
-<text x="{PAD}" y="{PAD + ROW_HEIGHT - 8}">Languages</text>
-{chr(10).join(rows)}
-</svg>
-"""
+    return "\n".join(["```math", r"\begin{array}{llr}", *rows, r"\end{array}", "```"])
 
 
 def main():
     totals = language_totals()
     if not totals:
         return
-    with open(OUTPUT, "w", encoding="utf-8", newline="\n") as f:
-        f.write(render(totals, language_colors()))
+    with open(README, encoding="utf-8") as f:
+        readme = f.read()
+    block = f"{START}\n{render(totals, language_colors())}\n{END}"
+    updated = re.sub(f"{re.escape(START)}.*?{re.escape(END)}", lambda _: block, readme, flags=re.S)
+    with open(README, "w", encoding="utf-8", newline="\n") as f:
+        f.write(updated)
 
 
 if __name__ == "__main__":
