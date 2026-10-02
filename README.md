@@ -3,14 +3,13 @@
 Currently studying Software Engineering and exploring AI and machine learning.
 
 <!--LANGS:START-->
-```math
-\begin{array}{llr}
-\texttt{Languages} & & \\
-\texttt{Java} & \color{#b07219}{\rule{8.23em}{0.6em}} & \texttt{54.9\%} \\
-\texttt{Python} & \color{#3572A5}{\rule{6.43em}{0.6em}} & \texttt{42.9\%} \\
-\texttt{Go Template} & \color{#00ADD8}{\rule{0.32em}{0.6em}} & \texttt{2.1\%} \\
-\texttt{Dockerfile} & \color{#384d54}{\rule{0.10em}{0.6em}} & \texttt{0.1\%} \\
-\end{array}
+```diff
+  Languages
+
++ Java         ██████████████████████                     54.9%
+- Python       █████████████████                          42.9%
+! Go Template  █                                           2.1%
+# Dockerfile                                               0.1%
 ```
 <!--LANGS:END-->
 
