@@ -1,4 +1,6 @@
-## Hi there 👋
+## Wade Thornton
+
+Currently studying Software Engineering and exploring AI and machine learning.
 
 <img src="languages.svg" alt="Language distribution" />
 
