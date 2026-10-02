@@ -1,13 +1,6 @@
 ## Hi there 👋
 
-```
-Languages
-
-Java         ██████████████████████                    54.9%
-Python       █████████████████                         42.9%
-Go Template  █                                          2.1%
-Dockerfile                                              0.1%
-```
+<img src="languages.svg" alt="Language distribution" />
 
 <!--
 **Mysticz0/Mysticz0** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
