@@ -9,9 +9,8 @@ USER = os.environ.get("GH_USER", "Mysticz0")
 TOKEN = os.environ.get("GITHUB_TOKEN")
 README = "README.md"
 BAR_WIDTH = 40
-# GitHub's diff highlighting colors a line by its first character:
-# "+" green, "-" red, "!" orange. Languages past the third use "#" (gray).
-PREFIXES = ["+", "-", "!"]
+
+PREFIX = "+"
 START, END = "<!--LANGS:START-->", "<!--LANGS:END-->"
 
 
@@ -43,13 +42,12 @@ def language_totals():
 def render(totals):
     total = sum(totals.values())
     name_width = max(len(lang) for lang in totals)
-    lines = ["```diff", "  Languages", ""]
+    lines = ["```", "  Language Usage", ""]
     for i, (lang, size) in enumerate(totals.items()):
         share = size / total
         halves = round(share * BAR_WIDTH * 2)
         bar = "█" * (halves // 2) + ("▌" if halves % 2 else "")
-        prefix = PREFIXES[i] if i < len(PREFIXES) else "#"
-        lines.append(f"{prefix} {lang:<{name_width}}  {bar:<{BAR_WIDTH}}  {share * 100:5.1f}%")
+        lines.append(f"{PREFIX} {lang:<{name_width}}  {bar:<{BAR_WIDTH}}  {share * 100:5.1f}%")
     lines.append("```")
     return "\n".join(lines)
 
