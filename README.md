@@ -1,5 +1,13 @@
 ## Hi there 👋
 
+### 📊 Language Distribution
+
+<p align="left">
+  <a href="https://github.com/Mysticz0?tab=repositories">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Mysticz0&layout=compact&langs_count=10&hide_border=true&theme=transparent" alt="Mysticz0's most used languages" />
+  </a>
+</p>
+
 <!--
 **Mysticz0/Mysticz0** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
