@@ -6,11 +6,12 @@ Currently studying Software Engineering and exploring AI and machine learning.
 ```
   Language Usage
 
-+ Python       ██████████████▌                            35.9%
-+ Java         █████████████▌                             33.7%
-+ C            ███████████▌                               28.7%
-+ Go Template  ▌                                           1.3%
-+ Makefile                                                 0.3%
++ C            ████████████████                           39.7%
++ Python       █████████████                              32.5%
++ Java         ██████████                                 25.4%
++ Go Template  ▌                                           1.0%
++ Shell        ▌                                           0.8%
++ Makefile                                                 0.6%
 + Dockerfile                                               0.1%
 ```
 <!--LANGS:END-->
